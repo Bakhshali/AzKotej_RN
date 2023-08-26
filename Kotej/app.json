@@ -3,6 +3,9 @@
     "name": "Kotej",
     "slug": "Kotej",
     "version": "1.0.0",
+    "permissions": [
+      "INTERNET"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

@@ -10,6 +10,7 @@ import SvgUser02 from '../../icons/User02';
 import ProfileComp from '../../components/ProfileComp';
 import MapComp from '../../components/MapComp';
 import SvgCompass from '../../icons/Compass';
+import HomeDetail from '../../screens/DetailPage';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -65,6 +66,7 @@ const MainTab = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen component={Tabs} name="Tabscmp" />
+            <Stack.Screen component={HomeDetail} name="DetailScreen" />
         </Stack.Navigator>
     )
 }

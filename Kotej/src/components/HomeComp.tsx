@@ -3,7 +3,7 @@ import SvgSearchMagnifyingGlass from '../icons/SearchMagnifyingGlass'
 
 import * as Font from 'expo-font';
 import SvgLocation from '../icons/Location';
-
+import useFetch from '../api/useData';
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
   'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
@@ -12,7 +12,9 @@ Font.loadAsync({
   'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
 });
 
-const HomeComp = () => {
+const HomeComp = ({ navigation }) => {
+
+ 
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
@@ -61,26 +63,28 @@ const HomeComp = () => {
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <View style={{ flexDirection: "row", gap: 15 }}>
-                <View>
-                  <View style={{ marginTop: 10 }}>
-                    <Image style={styles.homeImg} source={require("../assets/image/homes/1.jpg")} />
+                <TouchableOpacity onPress={() => navigation.navigate("DetailScreen")}>
+                  <View>
+                    <View style={{ marginTop: 10 }}>
+                      <Image style={styles.homeImg} source={require("../assets/image/homes/1.jpg")} />
+                    </View>
+                    <View style={styles.mainCard}>
+                      <View style={{ flexDirection: "row", gap: 8, marginTop: 5 }}>
+                        <Text style={[styles.detailhome, { color: "#BBBBBB" }]}>Villa</Text>
+                        <Text style={styles.detailhome}>·  106 m²</Text>
+                        <Text style={styles.detailhome}>6 otaq</Text>
+                        <Text style={styles.detailhome}>12 nəfər</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.priceTxt}>128 AZN/gün</Text>
+                      </View>
+                      <View style={{ flexDirection: "row", gap: 3 }}>
+                        <SvgLocation style={{ width: 12, height: 20 }} />
+                        <Text style={styles.addressTxt}>Bakı, Bilgəh q.</Text>
+                      </View>
+                    </View>
                   </View>
-                  <View style={styles.mainCard}>
-                    <View style={{ flexDirection: "row", gap: 8, marginTop: 5 }}>
-                      <Text style={[styles.detailhome, { color: "#BBBBBB" }]}>Villa</Text>
-                      <Text style={styles.detailhome}>·  106 m²</Text>
-                      <Text style={styles.detailhome}>6 otaq</Text>
-                      <Text style={styles.detailhome}>12 nəfər</Text>
-                    </View>
-                    <View>
-                      <Text style={styles.priceTxt}>128 AZN/gün</Text>
-                    </View>
-                    <View style={{ flexDirection: "row", gap: 3 }}>
-                      <SvgLocation style={{ width: 12, height: 20 }} />
-                      <Text style={styles.addressTxt}>Bakı, Bilgəh q.</Text>
-                    </View>
-                  </View>
-                </View>
+                </TouchableOpacity>
                 <View>
                   <View style={{ marginTop: 10 }}>
                     <Image style={styles.homeImg} source={require("../assets/image/homes/2.jpg")} />
@@ -219,7 +223,6 @@ const styles = StyleSheet.create({
   box: {
     width: "48%",
     marginTop: 10
-
   },
   boxContainer: {
     width: "100%",
@@ -232,7 +235,6 @@ const styles = StyleSheet.create({
     color: "#BBBBBB",
     fontSize: 14,
     fontFamily: "Poppins-Regular"
-
   },
   priceTxt: {
     color: "white",
@@ -249,7 +251,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderBottomLeftRadius: 7,
     borderBottomRightRadius: 7,
-    gap: 5
+    gap: 5,
+    height: 85
   },
   mainCardAll: {
     backgroundColor: "#353535",
