@@ -30,7 +30,7 @@ const HomeComp = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <ScrollView horizontal={true}>
-            <View style={{ marginTop: 30, flexDirection: "row", gap: 25 }}>
+          <View style={{ marginTop: 30, flexDirection: "row", gap: 25 }}>
               <View>
                 <Image style={styles.regionImg} source={require("../assets/image/regions/baku.jpg")} />
                 <Text style={styles.regionTxt}>Bakı</Text>
