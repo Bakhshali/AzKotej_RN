@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, FlatList } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, FlatList, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import * as Font from 'expo-font';
 import { amenity } from '../data/amenities';
@@ -15,7 +15,7 @@ import SvgWashing from '../icons/Washing';
 import SvgTv from '../icons/Tv';
 import SvgPhone from '../icons/Phone';
 import SvgCloseMd from '../icons/CloseMd';
-import useFetch from '../api/useData';
+import SvgConditioner from '../icons/Conditioner';
 
 
 Font.loadAsync({
@@ -36,7 +36,7 @@ const HomeDetail = () => {
   };
 
   // console.log(data);
-  
+
 
   // const closeOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
   //   const yOffset = event.nativeEvent.contentOffset.y;
@@ -46,7 +46,7 @@ const HomeDetail = () => {
   //   }
   // };
 
-  const amenityItems = ({item}: any) => {
+  const amenityItems = ({ item }: any) => {
     return (
       <View>
         <View style={{ flexDirection: "row", gap: 8, alignItems: "center", marginTop: 12, marginBottom: 12 }}>
@@ -60,7 +60,7 @@ const HomeDetail = () => {
 
   return (
     <View style={{ backgroundColor: "#141414", flex: 1 }}>
-      <View>
+      <ScrollView>
         <View>
           <Image style={{ width: "100%", height: 300, resizeMode: "cover" }} source={require("../assets/image/homes/1.jpg")} />
         </View>
@@ -120,7 +120,7 @@ const HomeDetail = () => {
               <Text style={{ color: "white", fontSize: 17 }}>Wifi</Text>
             </View>
             <View style={{ width: "50%", flexDirection: "row", gap: 6, marginTop: 5 }}>
-              <SvgBathroom style={styles.bathSvg} />
+              <SvgConditioner style={styles.airSvg} />
               <Text style={{ color: "white", fontSize: 17 }}>Kondisaner</Text>
             </View>
           </View>
@@ -141,7 +141,10 @@ const HomeDetail = () => {
           </View>
         </View>
         <View style={styles.line}></View>
-      </View>
+        <View style={{marginHorizontal:15,marginTop:15}}>
+          <Text style={{color:"white",fontSize:16,fontFamily:"Poppins-Regular"}}> Həyətində müxtəlif meyvə ağacları var. Çox sakit yerdə yerləşir və dağın döşündə yeganə yol bu evə gəlir. Villaya əsas yoldanda gəlmək mümkündür. Villa ekoloji cəhətdən çox təmiz ərazıdə yerləşir və ev 360 dərəcə perimetri boyunca müşahidə-nəzarət kamerası ilə təchis olunub.</Text>
+        </View>
+      </ScrollView>
       <View style={styles.stickyContainer}>
         <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#3FB51F", gap: 8, borderRadius: 8, width: "90%", justifyContent: "center", height: 50 }}>
           <SvgPhone />
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: 100,
-    backgroundColor: '#3E3E3E',
+    // backgroundColor: '#3E3E3E',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -201,6 +204,9 @@ const styles = StyleSheet.create({
   },
   bathSvg: {
     marginTop: 1
+  },
+  airSvg: {
+    marginTop: 3
   },
   squareSvg: {
     marginTop: 5
