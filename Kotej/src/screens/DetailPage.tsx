@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
 import React, { useState } from 'react'
 import SvgDoors from '../icons/Doors'
 import SvgGuest from '../icons/Guest'
@@ -14,6 +14,7 @@ import SvgWifiHigh from '../icons/WifiHigh';
 import SvgWashing from '../icons/Washing';
 import SvgTv from '../icons/Tv';
 import SvgPhone from '../icons/Phone';
+import SvgCloseMd from '../icons/CloseMd';
 
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -30,6 +31,15 @@ const HomeDetail = () => {
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+
+  const closeOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const yOffset = event.nativeEvent.contentOffset.y;
+    const threshold = 100; // Adjust this threshold as needed
+    if (yOffset > threshold) {
+      toggleModal();
+    }
   };
 
   return (
@@ -128,10 +138,21 @@ const HomeDetail = () => {
         visible={isModalVisible}
         onRequestClose={toggleModal}
       >
-        <View style={styles.modalContainer}>
-          {/* Modal içeriği */}
-          <Text>Modal Content</Text>
-        </View>
+        <SafeAreaView style={styles.modalContainer}>
+          <View style={{ marginHorizontal: 15 }}>
+            <View style={{marginTop:10}}>
+              <TouchableOpacity onPress={toggleModal}>
+                <SvgCloseMd onPress={toggleModal} />
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop:20}}>
+              <Text style={{color:"white",fontSize:30,fontFamily:"Poppins-SemiBold"}}>Avadanlıqlar</Text>
+            </View>
+            <View>
+              <View></View>
+            </View>
+          </View>
+        </SafeAreaView>
       </Modal>
     </View>
   )
@@ -142,9 +163,10 @@ export default HomeDetail
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black', // Modal arkaplan rengi
+    backgroundColor: '#141414',
+    marginTop:40,
+    borderTopRightRadius:20,
+    borderTopLeftRadius:20
   },
   stickyContainer: {
     position: 'absolute',
