@@ -1,20 +1,22 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, FlatList } from 'react-native'
 import React, { useState } from 'react'
-import SvgDoors from '../icons/Doors'
-import SvgGuest from '../icons/Guest'
-
 import * as Font from 'expo-font';
+import { amenity } from '../data/amenities';
+
+// Svgs
+import SvgGuest from '../icons/Guest'
+import SvgDoors from '../icons/Doors'
 import SvgLocation from '../icons/Location';
-import SvgSearchMagnifyingGlass from '../icons/SearchMagnifyingGlass';
 import SvgBathroom from '../icons/Bathroom';
 import SvgResizeSquareSvgrepoCom from '../icons/ResizeSquareSvgrepoCom';
 import SvgLandParcels from '../icons/LandParcels';
-import SvgSwimming from '../icons/Swimming';
 import SvgWifiHigh from '../icons/WifiHigh';
 import SvgWashing from '../icons/Washing';
 import SvgTv from '../icons/Tv';
 import SvgPhone from '../icons/Phone';
 import SvgCloseMd from '../icons/CloseMd';
+import useFetch from '../api/useData';
+
 
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -33,14 +35,28 @@ const HomeDetail = () => {
     setModalVisible(!isModalVisible);
   };
 
+  // console.log(data);
+  
 
-  const closeOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const yOffset = event.nativeEvent.contentOffset.y;
-    const threshold = 100; // Adjust this threshold as needed
-    if (yOffset > threshold) {
-      toggleModal();
-    }
-  };
+  // const closeOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  //   const yOffset = event.nativeEvent.contentOffset.y;
+  //   const threshold = 100;
+  //   if (yOffset > threshold) {
+  //     toggleModal();
+  //   }
+  // };
+
+  const amenityItems = ({item}: any) => {
+    return (
+      <View>
+        <View style={{ flexDirection: "row", gap: 8, alignItems: "center", marginTop: 12, marginBottom: 12 }}>
+          <Image style={{ width: 16, height: 16 }} source={item.image} />
+          <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}>{item.name}</Text>
+        </View>
+        <View style={styles.lines}></View>
+      </View>
+    )
+  }
 
   return (
     <View style={{ backgroundColor: "#141414", flex: 1 }}>
@@ -140,17 +156,20 @@ const HomeDetail = () => {
       >
         <SafeAreaView style={styles.modalContainer}>
           <View style={{ marginHorizontal: 15 }}>
-            <View style={{marginTop:10}}>
+            <View style={{ marginTop: 10 }}>
               <TouchableOpacity onPress={toggleModal}>
                 <SvgCloseMd onPress={toggleModal} />
               </TouchableOpacity>
             </View>
-            <View style={{marginTop:20}}>
-              <Text style={{color:"white",fontSize:30,fontFamily:"Poppins-SemiBold"}}>Avadanlıqlar</Text>
+            <View style={{ marginTop: 20 }}>
+              <Text style={{ color: "white", fontSize: 30, fontFamily: "Poppins-SemiBold" }}>Avadanlıqlar</Text>
             </View>
-            <View>
-              <View></View>
-            </View>
+            <View style={[styles.lines, { marginTop: 10 }]}></View>
+            <FlatList
+              data={amenity}
+              renderItem={amenityItems}
+              keyExtractor={(item) => item.id.toString()}
+            />
           </View>
         </SafeAreaView>
       </Modal>
@@ -164,9 +183,9 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: '#141414',
-    marginTop:40,
-    borderTopRightRadius:20,
-    borderTopLeftRadius:20
+    marginTop: 40,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20
   },
   stickyContainer: {
     position: 'absolute',
@@ -206,6 +225,12 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: "#3E3E3E",
     marginTop: 10
+  },
+
+  lines: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#2F2F2F",
   },
 
   priceTxt: {

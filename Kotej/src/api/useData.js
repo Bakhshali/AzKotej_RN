@@ -11,7 +11,8 @@ const fetchData = async () => {
     setIsLoading(true)
 
     try {
-        const response = await axios.get('http://192.168.56.1:7777/api/getregion')
+        // const response = await axios.get('http://192.168.56.1:7777/api/getregion')
+        const response = await axios.get('https://646e467b9c677e23218b715b.mockapi.io/todo')
         setData(response.data)
         console.log("data",response.data)
         setIsLoading(false)

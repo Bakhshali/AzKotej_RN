@@ -14,7 +14,7 @@ Font.loadAsync({
 
 const HomeComp = ({ navigation }) => {
 
- 
+  
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
