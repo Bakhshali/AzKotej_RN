@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, FlatList, ScrollView, Linking } from 'react-native'
 import React, { useState } from 'react'
 import * as Font from 'expo-font';
 import { amenity } from '../data/amenities';
@@ -16,6 +16,7 @@ import SvgTv from '../icons/Tv';
 import SvgPhone from '../icons/Phone';
 import SvgCloseMd from '../icons/CloseMd';
 import SvgConditioner from '../icons/Conditioner';
+import MapView, { Marker } from 'react-native-maps';
 
 
 Font.loadAsync({
@@ -35,17 +36,6 @@ const HomeDetail = () => {
     setModalVisible(!isModalVisible);
   };
 
-  // console.log(data);
-
-
-  // const closeOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-  //   const yOffset = event.nativeEvent.contentOffset.y;
-  //   const threshold = 100;
-  //   if (yOffset > threshold) {
-  //     toggleModal();
-  //   }
-  // };
-
   const amenityItems = ({ item }: any) => {
     return (
       <View>
@@ -57,6 +47,19 @@ const HomeDetail = () => {
       </View>
     )
   }
+
+  const goMap = () => {
+    const location = {
+      longitude: 49.8513706,
+      latitude: 40.377195
+    };
+    console.log(location.latitude)
+    const url = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
+    console.log(url)
+
+    Linking.openURL(url);
+  }
+
 
   return (
     <View style={{ backgroundColor: "#141414", flex: 1 }}>
@@ -141,8 +144,31 @@ const HomeDetail = () => {
           </View>
         </View>
         <View style={styles.line}></View>
-        <View style={{marginHorizontal:15,marginTop:15}}>
-          <Text style={{color:"white",fontSize:16,fontFamily:"Poppins-Regular"}}> Həyətində müxtəlif meyvə ağacları var. Çox sakit yerdə yerləşir və dağın döşündə yeganə yol bu evə gəlir. Villaya əsas yoldanda gəlmək mümkündür. Villa ekoloji cəhətdən çox təmiz ərazıdə yerləşir və ev 360 dərəcə perimetri boyunca müşahidə-nəzarət kamerası ilə təchis olunub.</Text>
+        <View style={{ marginHorizontal: 15, marginTop: 15 }}>
+          <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}> Həyətində müxtəlif meyvə ağacları var. Çox sakit yerdə yerləşir və dağın döşündə yeganə yol bu evə gəlir. Villaya əsas yoldanda gəlmək mümkündür. Villa ekoloji cəhətdən çox təmiz ərazıdə yerləşir və ev 360 dərəcə perimetri boyunca müşahidə-nəzarət kamerası ilə təchis olunub.</Text>
+        </View>
+        <View style={styles.line}></View>
+        <View style={{ marginHorizontal: 15, marginTop: 15, height: 220 }}>
+          <TouchableOpacity onPress={() => goMap()}>
+            <MapView style={{ width: "100%", height: 120, borderRadius: 10 }}
+              initialRegion={{
+                latitude: 40.377195,
+                longitude: 49.8513706,
+                latitudeDelta: 0.050,
+                longitudeDelta: 0.080,
+              }}>
+
+              <Marker
+                coordinate={{
+                  latitude: 40.377195,
+                  longitude: 49.8513706
+                }}
+                // image={require("../assets/image/amenities/tv.png")}
+                title="Marker Title"
+                description="Marker Description"
+              />
+            </MapView>
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <View style={styles.stickyContainer}>
@@ -176,6 +202,7 @@ const HomeDetail = () => {
           </View>
         </SafeAreaView>
       </Modal>
+
     </View>
   )
 }
