@@ -39,8 +39,8 @@ const HomeDetail = () => {
   const amenityItems = ({ item }: any) => {
     return (
       <View>
-        <View style={{ flexDirection: "row", gap: 8, alignItems: "center", marginTop: 12, marginBottom: 12 }}>
-          <Image style={{ width: 16, height: 16 }} source={item.image} />
+        <View style={{ flexDirection: "row", gap: 8, marginTop: 12, marginBottom: 12 }}>
+          <Image style={{ width: 16, height: 16, marginTop: 2 }} source={item.image} />
           <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}>{item.name}</Text>
         </View>
         <View style={styles.lines}></View>
@@ -60,6 +60,10 @@ const HomeDetail = () => {
     Linking.openURL(url);
   }
 
+  const handleCallButtonPress = () => {
+    const phoneNumber = 'tel:0703044090';
+    Linking.openURL(phoneNumber);
+  };
 
   return (
     <View style={{ backgroundColor: "#141414", flex: 1 }}>
@@ -92,22 +96,22 @@ const HomeDetail = () => {
             <Text style={{ color: "white", fontSize: 20, fontFamily: "Poppins-SemiBold" }}>Ətraflı</Text>
           </View>
           <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", marginTop: 5 }}>
-            <View style={{ width: "50%", flexDirection: "row", gap: 9, marginTop: 5 }}>
-              <SvgDoors style={styles.doorSvgs} />
+            <View style={{ width: "50%", flexDirection: "row", gap: 9, marginTop: 5, alignItems: "center" }}>
+              <SvgDoors />
               <Text style={{ color: "white", fontSize: 17 }}>4 yataq otağı</Text>
             </View>
-            <View style={{ width: "50%", flexDirection: "row", gap: 5, marginTop: 5 }}>
-              <SvgBathroom style={styles.bathSvg} />
+            <View style={{ width: "50%", flexDirection: "row", gap: 5, marginTop: 5, alignItems: "center" }}>
+              <SvgBathroom />
               <Text style={{ color: "white", fontSize: 17 }}>2 hamam otağı</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", marginTop: 5 }}>
-            <View style={{ width: "50%", flexDirection: "row", gap: 11, marginTop: 5 }}>
-              <SvgResizeSquareSvgrepoCom style={styles.squareSvg} />
+            <View style={{ width: "50%", flexDirection: "row", gap: 11, marginTop: 5, alignItems: "center" }}>
+              <SvgResizeSquareSvgrepoCom />
               <Text style={{ color: "white", fontSize: 17 }}>106 m²</Text>
             </View>
-            <View style={{ width: "50%", flexDirection: "row", gap: 5, marginTop: 5 }}>
-              <SvgLandParcels style={styles.landSvg} />
+            <View style={{ width: "50%", flexDirection: "row", gap: 5, marginTop: 5, alignItems: "center" }}>
+              <SvgLandParcels />
               <Text style={{ color: "white", fontSize: 17 }}>5 sot</Text>
             </View>
           </View>
@@ -122,18 +126,18 @@ const HomeDetail = () => {
               <SvgWifiHigh />
               <Text style={{ color: "white", fontSize: 17 }}>Wifi</Text>
             </View>
-            <View style={{ width: "50%", flexDirection: "row", gap: 6, marginTop: 5 }}>
-              <SvgConditioner style={styles.airSvg} />
+            <View style={{ width: "50%", flexDirection: "row", gap: 8, marginTop: 5, alignItems: "center" }}>
+              <SvgConditioner />
               <Text style={{ color: "white", fontSize: 17 }}>Kondisaner</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", marginTop: 5 }}>
-            <View style={{ width: "50%", flexDirection: "row", gap: 11, marginTop: 5 }}>
-              <SvgWashing style={styles.washSvg} />
+            <View style={{ width: "50%", flexDirection: "row", gap: 11, marginTop: 5, alignItems: "center" }}>
+              <SvgWashing />
               <Text style={{ color: "white", fontSize: 17 }}>Paltaryuyan</Text>
             </View>
-            <View style={{ width: "50%", flexDirection: "row", gap: 8, marginTop: 5 }}>
-              <SvgTv style={styles.tvsvg} />
+            <View style={{ width: "50%", flexDirection: "row", gap: 9, marginTop: 5, alignItems: "center" }}>
+              <SvgTv />
               <Text style={{ color: "white", fontSize: 17 }}>TV</Text>
             </View>
           </View>
@@ -145,7 +149,7 @@ const HomeDetail = () => {
         </View>
         <View style={styles.line}></View>
         <View style={{ marginHorizontal: 15, marginTop: 15 }}>
-          <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}> Həyətində müxtəlif meyvə ağacları var. Çox sakit yerdə yerləşir və dağın döşündə yeganə yol bu evə gəlir. Villaya əsas yoldanda gəlmək mümkündür. Villa ekoloji cəhətdən çox təmiz ərazıdə yerləşir və ev 360 dərəcə perimetri boyunca müşahidə-nəzarət kamerası ilə təchis olunub.</Text>
+          <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}>Həyətində müxtəlif meyvə ağacları var. Çox sakit yerdə yerləşir və dağın döşündə yeganə yol bu evə gəlir. Villaya əsas yoldanda gəlmək mümkündür. Villa ekoloji cəhətdən çox təmiz ərazıdə yerləşir və ev 360 dərəcə perimetri boyunca müşahidə-nəzarət kamerası ilə təchis olunub.</Text>
         </View>
         <View style={styles.line}></View>
         <View style={{ marginHorizontal: 15, marginTop: 15, height: 220 }}>
@@ -174,7 +178,9 @@ const HomeDetail = () => {
       <View style={styles.stickyContainer}>
         <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#3FB51F", gap: 8, borderRadius: 8, width: "90%", justifyContent: "center", height: 50 }}>
           <SvgPhone />
-          <Text style={{ color: "white", fontFamily: "Poppins-Regular", fontSize: 16 }}>Rezerv et</Text>
+          <TouchableOpacity onPress={handleCallButtonPress}>
+            <Text style={{ color: "white", fontFamily: "Poppins-Regular", fontSize: 16 }}>Rezerv et</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <Modal
@@ -226,30 +232,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  doorSvgs: {
-    marginTop: 4
-  },
-  bathSvg: {
-    marginTop: 1
-  },
-  airSvg: {
-    marginTop: 3
-  },
-  squareSvg: {
-    marginTop: 5
-  },
-  washSvg: {
-    marginTop: 2
-  },
+  // doorSvgs: {
+  //   marginTop: 4
+  // },
+  // bathSvg: {
+  //   marginTop: 1
+  // },
+  // airSvg: {
+  //   marginTop: 3
+  // },
+  // squareSvg: {
+  //   marginTop: 5
+  // },
+  // washSvg: {
+  //   marginTop: 2
+  // },
   swimSvg: {
     marginTop: 2
   },
   guestSvgs: {
     marginTop: 3
   },
-  landSvg: {
-    marginTop: 0
-  },
+  // landSvg: {
+  //   marginTop: 0
+  // },
   tvsvg: {
     marginTop: 2
   },
