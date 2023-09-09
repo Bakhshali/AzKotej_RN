@@ -3,6 +3,7 @@
     "name": "Kotej",
     "slug": "Kotej",
     "version": "1.0.0",
+    "platforms": ["ios", "android"],
     "permissions": [
       "INTERNET"
     ],

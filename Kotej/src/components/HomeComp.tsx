@@ -1,9 +1,12 @@
-import { StyleSheet, Text, Image, TouchableOpacity, View, SafeAreaView, ScrollView } from 'react-native'
+import { StyleSheet, Text, Image, TouchableOpacity, View, SafeAreaView, ScrollView, Modal } from 'react-native'
 import SvgSearchMagnifyingGlass from '../icons/SearchMagnifyingGlass'
 
 import * as Font from 'expo-font';
 import SvgLocation from '../icons/Location';
 import useFetch from '../api/useData';
+import { isLoading } from 'expo-font';
+import { useState } from 'react';
+import DetailPage from '../screens/DetailPage';
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
   'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
@@ -12,9 +15,9 @@ Font.loadAsync({
   'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
 });
 
-const HomeComp = ({ navigation }) => {
+const HomeComp = ({navigation}) => {
 
-  
+  // const { data, isLoading, error } = useFetch();
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
@@ -30,7 +33,7 @@ const HomeComp = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <ScrollView horizontal={true}>
-          <View style={{ marginTop: 30, flexDirection: "row", gap: 25 }}>
+            <View style={{ marginTop: 30, flexDirection: "row", gap: 25 }}>
               <View>
                 <Image style={styles.regionImg} source={require("../assets/image/regions/baku.jpg")} />
                 <Text style={styles.regionTxt}>Bakı</Text>
@@ -63,7 +66,7 @@ const HomeComp = ({ navigation }) => {
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <View style={{ flexDirection: "row", gap: 15 }}>
-                <TouchableOpacity onPress={() => navigation.navigate("DetailScreen")}>
+                <TouchableOpacity onPress={()=>navigation.navigate("DetailScreen")}>
                   <View>
                     <View style={{ marginTop: 10 }}>
                       <Image style={styles.homeImg} source={require("../assets/image/homes/1.jpg")} />

@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, FlatList, ScrollView, Linking } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Modal, FlatList, ScrollView, Linking, Animated } from 'react-native'
 import React, { useState } from 'react'
 import * as Font from 'expo-font';
 import { amenity } from '../data/amenities';
-
 // Svgs
 import SvgGuest from '../icons/Guest'
 import SvgDoors from '../icons/Doors'
@@ -17,6 +16,10 @@ import SvgPhone from '../icons/Phone';
 import SvgCloseMd from '../icons/CloseMd';
 import SvgConditioner from '../icons/Conditioner';
 import MapView, { Marker } from 'react-native-maps';
+import { homes } from '../data/home';
+import SvgChevronLeft from '../icons/ChevronLeft';
+import SvgHeart01 from '../icons/Heart01';
+import SvgShareIOsExport from '../icons/ShareIOsExport';
 
 
 Font.loadAsync({
@@ -28,7 +31,28 @@ Font.loadAsync({
 });
 
 
-const HomeDetail = () => {
+
+const HomeDetail = ({ navigation }) => {
+
+  let AnimatedHeaderValue = new Animated.Value(0)
+  const headerMaxHeight = 150
+  const headerMinHeight = 50
+
+
+  // const animatedHeaderBackroundColor = AnimatedHeaderValue.interpolate({
+  //   inputRange:[0,headerMaxHeight-headerMinHeight],
+  //   outputRange: ["blue","red"],
+  //   extrapolate:"clamp"
+  // })
+
+  const animateHeaderHeigth = AnimatedHeaderValue.interpolate({
+    inputRange: [0, headerMaxHeight - headerMinHeight],
+    outputRange: [headerMaxHeight, headerMinHeight],
+    extrapolate: "clamp"
+  })
+
+
+
 
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -53,10 +77,7 @@ const HomeDetail = () => {
       longitude: 49.8513706,
       latitude: 40.377195
     };
-    console.log(location.latitude)
     const url = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
-    console.log(url)
-
     Linking.openURL(url);
   }
 
@@ -65,11 +86,34 @@ const HomeDetail = () => {
     Linking.openURL(phoneNumber);
   };
 
+
   return (
     <View style={{ backgroundColor: "#141414", flex: 1 }}>
-      <ScrollView>
+      <ScrollView scrollEventThrottle={16} onScroll={Animated.event(
+        [{nativeEvent:{contentOffset:{y:AnimatedHeaderValue}}}],
+        {useNativeDriver:false}
+      )}>
         <View>
-          <Image style={{ width: "100%", height: 300, resizeMode: "cover" }} source={require("../assets/image/homes/1.jpg")} />
+          <Image style={styles.imageMain} source={require("../assets/image/homes/1.jpg")} />
+          <Animated.View style={{ position: "absolute", top: 50, left: 20, flexDirection: "row", justifyContent: "space-between", width: "90%",height:animateHeaderHeigth }}>
+            <View>
+              <TouchableOpacity style={{}} onPress={() => navigation.navigate("HomeScrn")}>
+                <View style={{ backgroundColor: "black", borderRadius: 50, padding: 3 }}><SvgChevronLeft /></View>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <View>
+                <TouchableOpacity style={{}} onPress={() => navigation.navigate("HomeScrn")}>
+                  <View style={{ backgroundColor: "black", borderRadius: 50, padding: 3 }}><SvgHeart01 style={{ stroke: "white" }} /></View>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity style={{}} onPress={() => navigation.navigate("HomeScrn")}>
+                  <View style={{ backgroundColor: "black", borderRadius: 50, padding: 3 }}><SvgShareIOsExport /></View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Animated.View>
         </View>
         <View style={styles.container}>
           <View>
@@ -175,14 +219,12 @@ const HomeDetail = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <View style={styles.stickyContainer}>
+      <TouchableOpacity onPress={handleCallButtonPress} style={styles.stickyContainer}>
         <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#3FB51F", gap: 8, borderRadius: 8, width: "90%", justifyContent: "center", height: 50 }}>
           <SvgPhone />
-          <TouchableOpacity onPress={handleCallButtonPress}>
-            <Text style={{ color: "white", fontFamily: "Poppins-Regular", fontSize: 16 }}>Rezerv et</Text>
-          </TouchableOpacity>
+          <Text style={{ color: "white", fontFamily: "Poppins-Regular", fontSize: 16 }}>Rezerv et</Text>
         </View>
-      </View>
+      </TouchableOpacity>
       <Modal
         animationType="slide"
         transparent={true}
@@ -193,7 +235,7 @@ const HomeDetail = () => {
           <View style={{ marginHorizontal: 15 }}>
             <View style={{ marginTop: 10 }}>
               <TouchableOpacity onPress={toggleModal}>
-                <SvgCloseMd onPress={toggleModal} />
+                <SvgCloseMd style={{ width: 27, height: 27 }} onPress={toggleModal} />
               </TouchableOpacity>
             </View>
             <View style={{ marginTop: 20 }}>
@@ -216,6 +258,14 @@ const HomeDetail = () => {
 export default HomeDetail
 
 const styles = StyleSheet.create({
+  heartIcon: {
+
+  },
+  imageMain: {
+    width: "100%",
+    height: 300,
+    resizeMode: "cover"
+  },
   modalContainer: {
     flex: 1,
     backgroundColor: '#141414',
@@ -228,34 +278,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: 100,
-    // backgroundColor: '#3E3E3E',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // doorSvgs: {
-  //   marginTop: 4
-  // },
-  // bathSvg: {
-  //   marginTop: 1
-  // },
-  // airSvg: {
-  //   marginTop: 3
-  // },
-  // squareSvg: {
-  //   marginTop: 5
-  // },
-  // washSvg: {
-  //   marginTop: 2
-  // },
   swimSvg: {
     marginTop: 2
   },
   guestSvgs: {
     marginTop: 3
   },
-  // landSvg: {
-  //   marginTop: 0
-  // },
   tvsvg: {
     marginTop: 2
   },
