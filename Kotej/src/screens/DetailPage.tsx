@@ -20,7 +20,7 @@ import { homes } from '../data/home';
 import SvgChevronLeft from '../icons/ChevronLeft';
 import SvgHeart01 from '../icons/Heart01';
 import SvgShareIOsExport from '../icons/ShareIOsExport';
-
+// import Share from "react-native-share"
 
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -33,6 +33,20 @@ Font.loadAsync({
 
 
 const HomeDetail = ({ navigation }) => {
+
+
+  // const myCustomerShare = async () => {
+  //   const shareOptions = {
+  //     message:"Test"
+  //   }
+  //   try {
+  //     const ShareResponse = await Share.open(shareOptions)
+  //   } catch (error) {
+  //     console.log("error",error);
+      
+  //   }
+  // }
+
 
   let AnimatedHeaderValue = new Animated.Value(0)
   const headerMaxHeight = 150
@@ -90,12 +104,12 @@ const HomeDetail = ({ navigation }) => {
   return (
     <View style={{ backgroundColor: "#141414", flex: 1 }}>
       <ScrollView scrollEventThrottle={16} onScroll={Animated.event(
-        [{nativeEvent:{contentOffset:{y:AnimatedHeaderValue}}}],
-        {useNativeDriver:false}
+        [{ nativeEvent: { contentOffset: { y: AnimatedHeaderValue } } }],
+        { useNativeDriver: false }
       )}>
         <View>
           <Image style={styles.imageMain} source={require("../assets/image/homes/1.jpg")} />
-          <Animated.View style={{ position: "absolute", top: 50, left: 20, flexDirection: "row", justifyContent: "space-between", width: "90%",height:animateHeaderHeigth }}>
+          <Animated.View style={{ position: "absolute", top: 50, left: 20, flexDirection: "row", justifyContent: "space-between", width: "90%", height: animateHeaderHeigth }}>
             <View>
               <TouchableOpacity style={{}} onPress={() => navigation.navigate("HomeScrn")}>
                 <View style={{ backgroundColor: "black", borderRadius: 50, padding: 3 }}><SvgChevronLeft /></View>
@@ -108,7 +122,7 @@ const HomeDetail = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity style={{}} onPress={() => navigation.navigate("HomeScrn")}>
+                <TouchableOpacity>
                   <View style={{ backgroundColor: "black", borderRadius: 50, padding: 3 }}><SvgShareIOsExport /></View>
                 </TouchableOpacity>
               </View>

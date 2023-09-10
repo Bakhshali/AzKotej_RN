@@ -11,6 +11,7 @@ import ProfileComp from '../../components/ProfileComp';
 import MapComp from '../../components/MapComp';
 import SvgCompass from '../../icons/Compass';
 import HomeDetail from '../../screens/DetailPage';
+import SearchPage from '../../screens/SearchPage';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -67,6 +68,7 @@ const MainTab = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen component={Tabs} name="Tabscmp" />
             <Stack.Screen component={HomeDetail} name="DetailScreen" />
+            <Stack.Screen component={SearchPage} name="SearchScreen" />
         </Stack.Navigator>
     )
 }

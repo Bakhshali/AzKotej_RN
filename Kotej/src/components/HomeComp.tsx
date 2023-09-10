@@ -3,10 +3,7 @@ import SvgSearchMagnifyingGlass from '../icons/SearchMagnifyingGlass'
 
 import * as Font from 'expo-font';
 import SvgLocation from '../icons/Location';
-import useFetch from '../api/useData';
-import { isLoading } from 'expo-font';
-import { useState } from 'react';
-import DetailPage from '../screens/DetailPage';
+
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
   'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
@@ -26,7 +23,7 @@ const HomeComp = ({navigation}) => {
           <View style={{ flexDirection: "row" }}>
             <Image style={{ width: 120, height: 120 }} source={require("../assets/image/logo/2.png")} />
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate("SearchScreen")}>
             <View style={styles.inputView}>
               <Text style={styles.inputText}>Hara getmək istəyirsən?</Text>
               <SvgSearchMagnifyingGlass style={{ fill: "none", stroke: "#C7C7C7", position: "absolute", top: 13, left: 20 }} />
