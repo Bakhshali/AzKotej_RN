@@ -4,21 +4,28 @@ export const regions =[
         name:"Bakı"
     },
     {
-        id:1,
+        id:2,
         name:"Quba"
     },
     {
-        id:1,
+        id:3,
         name:"Gəncə"
     },
 
     {
-        id:1,
+        id:4,
         name:"Qəbələ"
     },
     {
-        id:1,
+        id:5,
         name:"Lerik"
     },
-    
+    {
+        id:6,
+        name:"Qusar"
+    },
+    {
+        id:6,
+        name:"İsmayıllı"
+    },
 ]

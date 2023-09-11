@@ -32,7 +32,7 @@ const MainTab = () => {
                     tabBarIcon: ({ focused }) => (
                         <SvgSearchMagnifyingGlass style={{
                             stroke: focused ? "#E1F340" : "gray",
-                            fill: focused ? "none" : "none"
+                            fill: focused ? "none" : "none",
                         }} />
                     )
                 }} component={HomeComp} name="HomeScrn" />
