@@ -10,7 +10,7 @@ const SearchPage = ({ navigation }) => {
     const regionItems = ({ item }: any) => {
         return (
             <View style={{ marginTop: 10 }}>
-               <Pressable>
+               <Pressable onPress={()=>navigation.navigate("FilterScreen")}>
                  <View style={{marginTop: 12, marginBottom: 12 }}>
                     <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}>{item.name}</Text>
                 </View>
@@ -32,7 +32,7 @@ const SearchPage = ({ navigation }) => {
                 <ScrollView>
                     <View style={{ marginTop: 20 }}>
                         <View style={{ width: "100%", backgroundColor: "#404040", borderRadius: 10, padding: 8 }}>
-                            <TextInput style={{ fontFamily: "Poppins-Medium", paddingLeft: 30 }} placeholder='Axtar' placeholderTextColor={"#B8B8B8"} />
+                            <TextInput style={{ fontFamily: "Poppins-Medium", paddingLeft: 30,color:"white" }} placeholder='Axtar' placeholderTextColor={"#B8B8B8"} />
                             <SvgSearchMagnifyingGlass style={styles.searchIcon} />
                         </View>
                     </View>

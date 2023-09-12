@@ -25,7 +25,7 @@ export const regions =[
         name:"Qusar"
     },
     {
-        id:6,
+        id:7,
         name:"İsmayıllı"
     },
 ]
