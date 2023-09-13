@@ -3,6 +3,7 @@ import SvgSearchMagnifyingGlass from '../icons/SearchMagnifyingGlass'
 
 import * as Font from 'expo-font';
 import SvgLocation from '../icons/Location';
+import useFetch from '../api/useData';
 
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -14,7 +15,10 @@ Font.loadAsync({
 
 const HomeComp = ({navigation}) => {
 
-  // const { data, isLoading, error } = useFetch();
+  const { data, isLoading, error } = useFetch();
+
+  console.log("data in homepage",data);
+  
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
