@@ -1,24 +1,72 @@
-import { StyleSheet, Text, Image, TouchableOpacity, View, SafeAreaView, ScrollView, Modal } from 'react-native'
+import { StyleSheet, Text, Image, TouchableOpacity, View, SafeAreaView, ScrollView, FlatList } from 'react-native'
 import SvgSearchMagnifyingGlass from '../icons/SearchMagnifyingGlass'
-
-import * as Font from 'expo-font';
 import SvgLocation from '../icons/Location';
-import useFetch from '../api/useData';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, StateType } from '../redux/stores/store';
+import { useEffect, useState } from 'react';
+import * as Font from 'expo-font';
+import { getHome } from '../redux/slices/HomeSlices';
 
-Font.loadAsync({
-  'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
-  'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
-  'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
-  'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-  'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
-});
+const HomeComp = ({ navigation }) => {
 
-const HomeComp = ({navigation}) => {
+  const dispatch = useDispatch<AppDispatch>()
+  const { data } = useSelector((state: StateType) => state.RegionSlice)
+  const { home } = useSelector((state: StateType) => state.HomeSlice)
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  const { data, isLoading, error } = useFetch();
+  useEffect(() => {
+    Font.loadAsync({
+      'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
+      'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
+    }).then(() => {
+      setFontsLoaded(true);
+    });
+  }, []);
 
-  console.log("data in homepage",data);
-  
+  useEffect(() => {
+    if (fontsLoaded) {
+      dispatch(getHome());
+    }
+  }, [fontsLoaded, dispatch]);
+
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+      </View>
+    );
+  }
+
+  const renderItemHome = ({ item }: any) => {
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate("DetailScreen")}>
+        <View>
+          <View style={{ marginTop: 10 }}>
+            <Image style={styles.homeImg} source={require("../assets/image/homes/1.jpg")} />
+          </View>
+          <View style={styles.mainCard}>
+            <View style={{ flexDirection: "row", gap: 8, marginTop: 5 }}>
+              <Text style={[styles.detailhome, { color: "#BBBBBB" }]}>{item.category}</Text>
+              <Text style={styles.detailhome}>·  {item.area} m²</Text>
+              <Text style={styles.detailhome}>{item.roomCount} otaq</Text>
+              <Text style={styles.detailhome}>{item.maxGuest} nəfər</Text>
+            </View>
+            <View>
+              <Text style={styles.priceTxt}>{item.price} AZN/gün</Text>
+            </View>
+            <View style={{ flexDirection: "row", gap: 3 }}>
+              <SvgLocation style={{ width: 12, height: 20 }} />
+              <Text style={styles.addressTxt}>{item.address} q.</Text>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
@@ -27,7 +75,7 @@ const HomeComp = ({navigation}) => {
           <View style={{ flexDirection: "row" }}>
             <Image style={{ width: 120, height: 120 }} source={require("../assets/image/logo/2.png")} />
           </View>
-          <TouchableOpacity onPress={()=>navigation.navigate("SearchScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
             <View style={styles.inputView}>
               <Text style={styles.inputText}>Hara getmək istəyirsən?</Text>
               <SvgSearchMagnifyingGlass style={{ fill: "none", stroke: "#C7C7C7", position: "absolute", top: 13, left: 20 }} />
@@ -65,72 +113,15 @@ const HomeComp = ({navigation}) => {
             <View style={{ marginTop: 25, marginHorizontal: 5 }}>
               <Text style={styles.firstTitle}>Ən çox bəyənilən</Text>
             </View>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-              <View style={{ flexDirection: "row", gap: 15 }}>
-                <TouchableOpacity onPress={()=>navigation.navigate("DetailScreen")}>
-                  <View>
-                    <View style={{ marginTop: 10 }}>
-                      <Image style={styles.homeImg} source={require("../assets/image/homes/1.jpg")} />
-                    </View>
-                    <View style={styles.mainCard}>
-                      <View style={{ flexDirection: "row", gap: 8, marginTop: 5 }}>
-                        <Text style={[styles.detailhome, { color: "#BBBBBB" }]}>Villa</Text>
-                        <Text style={styles.detailhome}>·  106 m²</Text>
-                        <Text style={styles.detailhome}>6 otaq</Text>
-                        <Text style={styles.detailhome}>12 nəfər</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.priceTxt}>128 AZN/gün</Text>
-                      </View>
-                      <View style={{ flexDirection: "row", gap: 3 }}>
-                        <SvgLocation style={{ width: 12, height: 20 }} />
-                        <Text style={styles.addressTxt}>Bakı, Bilgəh q.</Text>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-                <View>
-                  <View style={{ marginTop: 10 }}>
-                    <Image style={styles.homeImg} source={require("../assets/image/homes/2.jpg")} />
-                  </View>
-                  <View style={styles.mainCard}>
-                    <View style={{ flexDirection: "row", gap: 8, marginTop: 5 }}>
-                      <Text style={[styles.detailhome, { color: "#BBBBBB" }]}>Villa</Text>
-                      <Text style={styles.detailhome}>·  175 m²</Text>
-                      <Text style={styles.detailhome}>7 otaq</Text>
-                      <Text style={styles.detailhome}>15 nəfər</Text>
-                    </View>
-                    <View>
-                      <Text style={styles.priceTxt}>198 AZN/gün</Text>
-                    </View>
-                    <View style={{ flexDirection: "row", gap: 3 }}>
-                      <SvgLocation style={{ width: 12, height: 20 }} />
-                      <Text style={styles.addressTxt}>Lerik, Hamarmeşə k.</Text>
-                    </View>
-                  </View>
-                </View>
-                <View>
-                  <View style={{ marginTop: 10 }}>
-                    <Image style={styles.homeImg} source={require("../assets/image/homes/3.jpg")} />
-                  </View>
-                  <View style={styles.mainCard}>
-                    <View style={{ flexDirection: "row", gap: 8, marginTop: 5 }}>
-                      <Text style={[styles.detailhome, { color: "#BBBBBB" }]}>Villa</Text>
-                      <Text style={styles.detailhome}>·  96 m²</Text>
-                      <Text style={styles.detailhome}>2 otaq</Text>
-                      <Text style={styles.detailhome}>4 nəfər</Text>
-                    </View>
-                    <View>
-                      <Text style={styles.priceTxt}>215 AZN/gün</Text>
-                    </View>
-                    <View style={{ flexDirection: "row", gap: 3 }}>
-                      <SvgLocation style={{ width: 12, height: 20 }} />
-                      <Text style={styles.addressTxt}>Quba, Xınalıq k.</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </ScrollView>
+            <View>
+              <FlatList
+                horizontal
+                data={home}
+                renderItem={renderItemHome}
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={() => <View style={{ width: 20 }} />}
+              />
+            </View>
           </View>
           <View>
             <View>
@@ -218,10 +209,10 @@ const HomeComp = ({navigation}) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
-export default HomeComp
+export default HomeComp;
 
 const styles = StyleSheet.create({
   box: {
@@ -230,7 +221,6 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     width: "100%",
-    height: "85%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between"
@@ -255,15 +245,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderBottomLeftRadius: 7,
     borderBottomRightRadius: 7,
-    gap: 5,
-    height: 85
+    gap: 1,
+    height: 90
   },
   mainCardAll: {
     backgroundColor: "#353535",
     paddingHorizontal: 10,
     borderBottomLeftRadius: 7,
     borderBottomRightRadius: 7,
-    gap: 3
+    gap: 2
   },
   detailhome: {
     color: "white",

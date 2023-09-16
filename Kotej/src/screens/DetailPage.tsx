@@ -16,7 +16,6 @@ import SvgPhone from '../icons/Phone';
 import SvgCloseMd from '../icons/CloseMd';
 import SvgConditioner from '../icons/Conditioner';
 import MapView, { Marker } from 'react-native-maps';
-import { homes } from '../data/home';
 import SvgChevronLeft from '../icons/ChevronLeft';
 import SvgHeart01 from '../icons/Heart01';
 import SvgShareIOsExport from '../icons/ShareIOsExport';
