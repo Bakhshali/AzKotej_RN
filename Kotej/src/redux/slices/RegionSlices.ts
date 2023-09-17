@@ -2,13 +2,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface regionType {
-    data:any,
+    data: any,
+    filterName: string,
     status: 'pending' | 'fulfilled' | 'rejected' | null,
     error: any
 }
 
 const initialStates: regionType = {
     data: [],
+    filterName: "",
     status: null,
     error: null,
 }
@@ -19,9 +21,13 @@ export const getData = createAsyncThunk('get/region', async () => {
 })
 
 const RegionSlice = createSlice({
-    name:"regionSlice",
-    initialState:initialStates,
-    reducers:{},
+    name: "regionSlice",
+    initialState: initialStates,
+    reducers: {
+        addFilterName: (state, action) => {
+            state.filterName = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getData.pending, (state) => {
             state.status = 'pending'
@@ -35,3 +41,5 @@ const RegionSlice = createSlice({
 })
 
 export default RegionSlice.reducer
+
+export const { addFilterName } = RegionSlice.actions

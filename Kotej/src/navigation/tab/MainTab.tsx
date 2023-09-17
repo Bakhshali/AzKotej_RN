@@ -49,7 +49,9 @@ const MainTab = () => {
                     tabBarIcon: ({ focused }) => (
                         <SvgHeart01 style={{
                             stroke: focused ? "#E1F340" : "gray",
-                            fill: focused ? "none" : "none"
+                            fill: focused ? "none" : "none",
+                            width:26,
+                            height:26
                         }} />
                     )
                 }} component={FavoriteComp} name="FavoriteScrn" />

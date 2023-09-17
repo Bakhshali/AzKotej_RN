@@ -19,7 +19,6 @@ import MapView, { Marker } from 'react-native-maps';
 import SvgChevronLeft from '../icons/ChevronLeft';
 import SvgHeart01 from '../icons/Heart01';
 import SvgShareIOsExport from '../icons/ShareIOsExport';
-// import Share from "react-native-share"
 
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -33,30 +32,9 @@ Font.loadAsync({
 
 const HomeDetail = ({ navigation }) => {
 
-
-  // const myCustomerShare = async () => {
-  //   const shareOptions = {
-  //     message:"Test"
-  //   }
-  //   try {
-  //     const ShareResponse = await Share.open(shareOptions)
-  //   } catch (error) {
-  //     console.log("error",error);
-      
-  //   }
-  // }
-
-
   let AnimatedHeaderValue = new Animated.Value(0)
   const headerMaxHeight = 150
   const headerMinHeight = 50
-
-
-  // const animatedHeaderBackroundColor = AnimatedHeaderValue.interpolate({
-  //   inputRange:[0,headerMaxHeight-headerMinHeight],
-  //   outputRange: ["blue","red"],
-  //   extrapolate:"clamp"
-  // })
 
   const animateHeaderHeigth = AnimatedHeaderValue.interpolate({
     inputRange: [0, headerMaxHeight - headerMinHeight],
