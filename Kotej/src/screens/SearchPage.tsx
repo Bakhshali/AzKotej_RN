@@ -72,12 +72,12 @@ const SearchPage = ({ navigation }) => {
                     </TouchableOpacity>
                     <Text style={styles.headerText}>Hara getmək istəyirsən</Text>
                 </View>
-                <View style={{ marginTop: 20 }}>
+                {/* <View style={{ marginTop: 20 }}>
                     <View style={{ width: "100%", backgroundColor: "#404040", borderRadius: 10, padding: 8 }}>
                         <TextInput style={{ fontFamily: "Poppins-Medium", paddingLeft: 30, color: "white" }} placeholder='Axtar' placeholderTextColor={"#B8B8B8"} />
                         <SvgSearchMagnifyingGlass style={styles.searchIcon} />
                     </View>
-                </View>
+                </View> */}
                 <View style={{ marginTop: 30, gap: 10 }}>
                     {/* <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
                         <SvgLocation style={{ width: 18, height: 18 }} />

@@ -4,7 +4,7 @@ const SvgFilter = props => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     className="Filter_svg__svg-icon"
-    style={{
+    style={{  
       width: '1em',
       height: '1em',
       verticalAlign: 'middle',
@@ -12,8 +12,8 @@ const SvgFilter = props => (
       overflow: 'hidden',
     }}
     viewBox="0 0 1024 1024"
-    width="20"
-    height="20"
+    width="24"
+    height="24"
     {...props}>
     <Path
       fill="white"

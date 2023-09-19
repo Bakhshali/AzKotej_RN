@@ -17,6 +17,9 @@ const RegionFilterPage = ({ navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const { filterName } = useSelector((state: StateType) => state.RegionSlice)
 
+  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+
+
   useEffect(() => {
     Font.loadAsync({
       'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -27,7 +30,8 @@ const RegionFilterPage = ({ navigation }) => {
     }).then(() => {
       setFontsLoaded(true);
     });
-  }, []);
+    setSelectedItemIndex(null);
+  }, [navigation]);
 
   const filterRegion = home.filter((c: any) => c.region == filterName)
 
@@ -39,18 +43,37 @@ const RegionFilterPage = ({ navigation }) => {
   }, [fontsLoaded, dispatch]);
 
 
-  if (!fontsLoaded) {
-    return (
-      <View>
-      </View>
-    );
-  }
+  // if (!fontsLoaded) {
+  //   return (
+  //     <View>
+  //     </View>
+  //   );
+  // }
 
   const handleDelete = () => {
     dispatch(deleteFilterName())
     navigation.navigate("Tabscmp")
   }
 
+
+  const [sortedData, setSortedData] = useState(filterRegion);
+
+  const [ascendingOrderUcuz, setAscendingOrderUcuz] = useState(false);
+  const [ascendingOrderBahali, setAscendingOrderBahali] = useState(false);
+
+
+  const handleSortUcuzClick = () => {
+    const sorted = filterRegion.slice().sort((a: any, b: any) => a.price - b.price)
+    setSortedData(sorted);
+    setAscendingOrderUcuz(!ascendingOrderUcuz);
+  };
+
+  const handleSortBahaliClick = () => {
+    const sorted = filterRegion.slice().sort((a: any, b: any) => b.price - a.price);
+
+    setSortedData(sorted);
+    setAscendingOrderBahali(!ascendingOrderBahali);
+  };
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
       <ScrollView>
@@ -64,12 +87,31 @@ const RegionFilterPage = ({ navigation }) => {
                 <Text style={styles.headerText}>{filterName}</Text>
               </View>
             </View>
+
+          </View>
+          <View style={{ marginTop: 20, marginHorizontal: 3, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              <View style={{ width: 130, height: 35, borderRadius: 8, borderColor: "white", borderWidth: 1, justifyContent: "center", alignItems: "center" }}>
+                <TouchableOpacity onPress={handleSortUcuzClick}>
+                  <Text style={{ color: "white", fontSize: 14, fontFamily: "Poppins-Regular" }}>
+                    Əvvəlcə ucuz
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ width: 130, height: 35, borderRadius: 8, borderColor: "white", borderWidth: 1, justifyContent: "center", alignItems: "center" }}>
+                <TouchableOpacity onPress={handleSortBahaliClick}>
+                  <Text style={{ color: "white", fontSize: 14, fontFamily: "Poppins-Regular" }}>
+                    Əvvəlcə bahalı
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
           <View>
             <View style={styles.boxContainer} >
               {
-                filterRegion.map((item: any, index: any) => (
-                  <View key={index} style={styles.box} >
+                sortedData.map((item: any, index: any) => (
+                  <TouchableOpacity onPress={()=>navigation.navigate("DetailScreen",item)} key={index} style={styles.box} >
                     <View style={{ marginTop: 10 }}>
                       <Image style={styles.homeImgAll} source={{ uri: item.photos }} />
                     </View>
@@ -88,7 +130,7 @@ const RegionFilterPage = ({ navigation }) => {
                         <Text style={[styles.addressTxt, { fontSize: 13 }]}>{item.region}, {item.address} k.</Text>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 ))
               }
             </View>

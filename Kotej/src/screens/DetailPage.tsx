@@ -74,6 +74,8 @@ const HomeDetail = ({ navigation, route }) => {
     Linking.openURL(url);
   }
 
+
+
   const handleCallButtonPress = () => {
     const phoneNumber = 'tel:0703044090';
     Linking.openURL(phoneNumber);
@@ -91,11 +93,11 @@ const HomeDetail = ({ navigation, route }) => {
         { useNativeDriver: false }
       )}>
         <View>
-          <Image style={styles.imageMain} source={require("../assets/image/homes/1.jpg")} />
+          <Image style={styles.imageMain} source={{ uri: item.photos }} />
           <Animated.View style={{ position: "absolute", top: 50, left: 20, flexDirection: "row", justifyContent: "space-between", width: "90%", height: animateHeaderHeigth }}>
             <View>
               <TouchableOpacity style={{}} onPress={() => navigation.navigate("HomeScrn")}>
-                <View style={{ backgroundColor: "#2F2F2F", borderRadius: 50, width:38,height:38,flexDirection:"row",justifyContent:"center",alignItems:"center" }}><SvgChevronLeft /></View>
+                <View style={{ backgroundColor: "#2F2F2F", borderRadius: 50, width: 38, height: 38, flexDirection: "row", justifyContent: "center", alignItems: "center" }}><SvgChevronLeft /></View>
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row", gap: 10 }}>
@@ -110,9 +112,9 @@ const HomeDetail = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View> */}
               <View>
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                   <View style={{ backgroundColor: "#2F2F2F", borderRadius: 50, width:38,height:38,flexDirection:"row",justifyContent:"center",alignItems:"center"}}><SvgShareIOsExport /></View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           </Animated.View>
@@ -124,16 +126,16 @@ const HomeDetail = ({ navigation, route }) => {
           <View>
             <View style={{ flexDirection: "row", marginTop: 5, gap: 8 }}>
               <Text style={styles.detailhome}>Villa</Text>
-              <Text style={styles.detailhome}>106 m²</Text>
+              <Text style={styles.detailhome}>{item.area} m²</Text>
               <SvgDoors style={styles.doorSvg} />
-              <Text style={styles.detailhome}>6 otaq</Text>
+              <Text style={styles.detailhome}>{item.roomCount} otaq</Text>
               <SvgGuest style={styles.guestSvg} />
-              <Text style={styles.detailhome}>12 nəfər</Text>
+              <Text style={styles.detailhome}>{item.maxGuest} nəfər</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", gap: 4, marginTop: 7 }}>
             <SvgLocation style={{ width: 10, height: 20 }} />
-            <Text style={styles.addressTxt}>Lerik rayonu, Hamarmeşə kəndi</Text>
+            <Text style={styles.addressTxt}>{item.region}, {item.address}</Text>
           </View>
         </View>
         <View style={styles.line}></View>
@@ -147,21 +149,21 @@ const HomeDetail = ({ navigation, route }) => {
                 width: 13,
                 height: 13
               }} />
-              <Text style={{ color: "white", fontSize: 17 }}>4 yataq otağı</Text>
+              <Text style={{ color: "white", fontSize: 17 }}>{item.bedRoom} yataq otağı</Text>
             </View>
             <View style={{ width: "50%", flexDirection: "row", gap: 5, marginTop: 5, alignItems: "center" }}>
               <SvgBathroom />
-              <Text style={{ color: "white", fontSize: 17 }}>2 hamam otağı</Text>
+              <Text style={{ color: "white", fontSize: 17 }}>{item.bathRoom} hamam otağı</Text>
             </View>
           </View>
           <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", marginTop: 5 }}>
             <View style={{ width: "50%", flexDirection: "row", gap: 11, marginTop: 5, alignItems: "center" }}>
               <SvgResizeSquareSvgrepoCom />
-              <Text style={{ color: "white", fontSize: 17 }}>106 m²</Text>
+              <Text style={{ color: "white", fontSize: 17 }}>{item.area} m²</Text>
             </View>
             <View style={{ width: "50%", flexDirection: "row", gap: 5, marginTop: 5, alignItems: "center" }}>
               <SvgLandParcels />
-              <Text style={{ color: "white", fontSize: 17 }}>5 sot</Text>
+              <Text style={{ color: "white", fontSize: 17 }}>{item.land} sot</Text>
             </View>
           </View>
         </View>
@@ -198,25 +200,24 @@ const HomeDetail = ({ navigation, route }) => {
         </View>
         <View style={styles.line}></View>
         <View style={{ marginHorizontal: 15, marginTop: 15 }}>
-          <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}>Həyətində müxtəlif meyvə ağacları var. Çox sakit yerdə yerləşir və dağın döşündə yeganə yol bu evə gəlir. Villaya əsas yoldanda gəlmək mümkündür. Villa ekoloji cəhətdən çox təmiz ərazıdə yerləşir və ev 360 dərəcə perimetri boyunca müşahidə-nəzarət kamerası ilə təchis olunub.</Text>
+          <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}>{item.description}</Text>
         </View>
         <View style={styles.line}></View>
         <View style={{ marginHorizontal: 15, marginTop: 15, height: 220 }}>
           <TouchableOpacity onPress={() => goMap()}>
             <MapView style={{ width: "100%", height: 120, borderRadius: 10 }}
               initialRegion={{
-                latitude: 40.377195,
-                longitude: 49.8513706,
+                latitude: item.latitude,
+                longitude: item.longtitude,
                 latitudeDelta: 0.050,
                 longitudeDelta: 0.080,
               }}>
 
               <Marker
                 coordinate={{
-                  latitude: 40.377195,
-                  longitude: 49.8513706
+                  latitude: item.latitude,
+                  longitude: item.longtitude
                 }}
-                // image={require("../assets/image/amenities/tv.png")}
                 title="Marker Title"
                 description="Marker Description"
               />

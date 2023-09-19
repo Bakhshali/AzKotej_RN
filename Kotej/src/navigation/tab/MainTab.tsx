@@ -13,7 +13,7 @@ import SvgCompass from '../../icons/Compass';
 import HomeDetail from '../../screens/DetailPage';
 import SearchPage from '../../screens/SearchPage';
 import FilterPage from '../../screens/FilterPage';
-import AccountPage from '../../screens/AccountPage';
+import AccountPage from '../../screens/MapPage';
 import RegionFilterPage from '../../screens/RegionFilterPage';
 
 const Tab = createBottomTabNavigator()
@@ -41,30 +41,14 @@ const MainTab = () => {
                 }} component={HomeComp} name="HomeScrn" />
                 <Tab.Screen options={{
                     tabBarIcon: ({ focused }) => (
-                        <SvgCompass style={{
-                            stroke: focused ? "#E1F340" : "gray",
-                            fill: focused ? "none" : "none"
-                        }} />
-                    )
-                }} component={MapComp} name="MapScrn" />
-                <Tab.Screen options={{
-                    tabBarIcon: ({ focused }) => (
                         <SvgHeart01 style={{
                             stroke: focused ? "#E1F340" : "gray",
                             fill: focused ? "none" : "none",
-                            width:26,
-                            height:26
+                            width: 26,
+                            height: 26
                         }} />
                     )
                 }} component={FavoriteComp} name="FavoriteScrn" />
-                <Tab.Screen options={{
-                    tabBarIcon: ({ focused }) => (
-                        <SvgUser02 style={{
-                            stroke: focused ? "#E1F340" : "gray",
-                            fill: focused ? "none" : "none"
-                        }} />
-                    )
-                }} component={ProfileComp} name="ProfileScrn" />
             </Tab.Navigator>
         )
     }
@@ -75,7 +59,6 @@ const MainTab = () => {
             <Stack.Screen component={HomeDetail} name="DetailScreen" />
             <Stack.Screen component={SearchPage} name="SearchScreen" />
             <Stack.Screen component={FilterPage} name="FilterScreen" />
-            <Stack.Screen component={AccountPage} name="AccountScreen" />
             <Stack.Screen component={RegionFilterPage} name="RegionScreen" />
         </Stack.Navigator>
     )

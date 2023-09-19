@@ -8,7 +8,7 @@ import * as Font from 'expo-font';
 import { getHome } from '../redux/slices/HomeSlices';
 import { deleteFilterName, getData } from '../redux/slices/RegionSlices';
 import SvgChevronLeft from '../icons/ChevronLeft';
-import MapView, { Marker } from 'react-native-maps';
+import MapView from 'react-native-maps';
 
 const MapPage = ({ navigation }) => {
 
@@ -18,41 +18,44 @@ const MapPage = ({ navigation }) => {
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
   console.log(home);
+  
 
-
+  const goMap = () => {
+    const location = {
+      longitude: 49.8513706,
+      latitude: 40.377195
+    };
+    const url = `https://maps.google.com/?q=${location.latitude},${location.longitude}`;
+    Linking.openURL(url);
+  }
 
 
 
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'black', flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
       <View style={{ marginHorizontal: 15, marginTop: 15, height: 220 }}>
-        <TouchableOpacity>
-          <MapView
-            style={{ width: '100%', height: 400, borderRadius: 10 }}
+        <TouchableOpacity onPress={() => goMap()}>
+          {/* <MapView style={{ width: "100%", height: 120, borderRadius: 10 }}
             initialRegion={{
-              latitude: home[0].latitude, // Use the latitude of the first item (adjust as needed)
-              longitude: home[0].longtitude, // Use the longitude of the first item (adjust as needed)
+              latitude: item.latitude,
+              longitude: item.longtitude,
               latitudeDelta: 0.050,
               longitudeDelta: 0.080,
-            }}
-          >
-            {home.map((item :any, index :any) => (
-              <Marker
-                key={index}
-                coordinate={{
-                  latitude: item.latitude,
-                  longitude: item.longtitude,
-                }}
-                title={`Marker ${index} Title`} // You can customize the title
-                description={`Marker ${index} Description`} // You can customize the description
-              />
-            ))}
-          </MapView>
+            }}>
+
+            <Marker
+              coordinate={{
+                latitude: item.latitude,
+                longitude: item.longtitude
+              }}
+              title="Marker Title"
+              description="Marker Description"
+            />
+          </MapView> */}
         </TouchableOpacity>
       </View>
     </SafeAreaView>
-
   );
 }
 

@@ -96,35 +96,6 @@ const FilterPage = ({ navigation }) => {
     }, [fontsLoaded, dispatch]);
 
 
-    // if (!fontsLoaded) {
-    //     return (
-    //         <View>
-    //         </View>
-    //     );
-    // // }
-
-
-    // const [sortedData, setSortedData] = useState(allFilteredData);
-
-    // const [ascendingOrderUcuz, setAscendingOrderUcuz] = useState(false);
-    // const [ascendingOrderBahali, setAscendingOrderBahali] = useState(false);
-
-
-    // const handleSortUcuzClick = () => {
-    //     const sorted =  allFilteredData.slice().sort((a: any, b: any) => a.price - b.price)
-    //     setSortedData(sorted);
-    //     setAscendingOrderUcuz(!ascendingOrderUcuz);
-    // };
-
-    // const handleSortBahaliClick = () => {
-    //     const sorted = allFilteredData.slice().sort((a: any, b: any) => b.price - a.price);
-
-    //     setSortedData(sorted);
-    //     setAscendingOrderBahali(!ascendingOrderBahali);
-    // };
-
-
-
 
     const renderHomeItems = ({ item }: any) => {
         const isItemInFavorites = favorites.some((favoriteItem: any) => favoriteItem._id === item._id);
@@ -132,7 +103,7 @@ const FilterPage = ({ navigation }) => {
             <TouchableOpacity onPress={() => navigation.navigate("DetailScreen")}>
                 <View>
                     <View style={{ marginTop: 15 }}>
-                        <Image style={styles.homeImg} source={require("../assets/image/homes/1.jpg")} />
+                        <Image style={styles.homeImg} source={{ uri: item.photos }} />
                         <TouchableOpacity onPress={() => dispatch(addToFavorite(item))} style={{ padding: 6, borderRadius: 50, backgroundColor: "#1A1A1A", position: "absolute", right: 10, top: 10 }}>
                             <SvgHeart01 style={{ stroke: isItemInFavorites ? "red" : "white", fill: isItemInFavorites ? "red" : "none", width: 29, height: 29 }} />
                         </TouchableOpacity>
@@ -194,7 +165,7 @@ const FilterPage = ({ navigation }) => {
                         <View style={{ flexDirection: "row", gap: 8 }}>
                             <TouchableOpacity
                                 onPress={() => handleClick()}>
-                                <SvgChevronLeft style={{marginTop:2}} />
+                                <SvgChevronLeft style={{ marginTop: 2 }} />
                             </TouchableOpacity>
                             <Text style={styles.headerText}>{filterName}</Text>
                         </View>
@@ -202,7 +173,6 @@ const FilterPage = ({ navigation }) => {
                             <TouchableOpacity onPress={toggleModal}>
                                 <SvgFilter />
                             </TouchableOpacity>
-                            <SvgMap />
                         </View>
                     </View>
                 </View>
@@ -228,6 +198,7 @@ const FilterPage = ({ navigation }) => {
                 <FlatList
                     data={allFilteredData}
                     renderItem={renderHomeItems}
+                    showsVerticalScrollIndicator={false}
                 />
             </View>
             <Modal

@@ -46,7 +46,7 @@ const FavoriteComp = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate("DetailScreen")}>
         <View>
           <View style={{ marginTop: 15 }}>
-            <Image style={styles.homeImg} source={require("../assets/image/homes/1.jpg")} />
+            <Image style={styles.homeImg} source={{ uri: item.photos }} />
             <TouchableOpacity onPress={() => dispatch(addToFavorite(item))} style={{ padding: 6, borderRadius: 50, backgroundColor: "#1A1A1A", position: "absolute", right: 10, top: 10 }}>
               <SvgHeart01 style={{ stroke: isItemInFavorites ? "red" : "white", fill: isItemInFavorites ? "red" : "white", width: 29, height: 29 }} />
             </TouchableOpacity>
