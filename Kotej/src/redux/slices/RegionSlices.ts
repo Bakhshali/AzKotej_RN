@@ -20,12 +20,17 @@ export const getData = createAsyncThunk('get/region', async () => {
     return response.data
 })
 
+
+
 const RegionSlice = createSlice({
     name: "regionSlice",
     initialState: initialStates,
     reducers: {
         addFilterName: (state, action) => {
             state.filterName = action.payload
+        },
+        deleteFilterName: (state) => {
+            state.filterName = "";
         }
     },
     extraReducers: (builder) => {
@@ -42,4 +47,4 @@ const RegionSlice = createSlice({
 
 export default RegionSlice.reducer
 
-export const { addFilterName } = RegionSlice.actions
+export const { addFilterName, deleteFilterName } = RegionSlice.actions

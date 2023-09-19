@@ -13,6 +13,8 @@ import SvgCompass from '../../icons/Compass';
 import HomeDetail from '../../screens/DetailPage';
 import SearchPage from '../../screens/SearchPage';
 import FilterPage from '../../screens/FilterPage';
+import AccountPage from '../../screens/AccountPage';
+import RegionFilterPage from '../../screens/RegionFilterPage';
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -73,6 +75,8 @@ const MainTab = () => {
             <Stack.Screen component={HomeDetail} name="DetailScreen" />
             <Stack.Screen component={SearchPage} name="SearchScreen" />
             <Stack.Screen component={FilterPage} name="FilterScreen" />
+            <Stack.Screen component={AccountPage} name="AccountScreen" />
+            <Stack.Screen component={RegionFilterPage} name="RegionScreen" />
         </Stack.Navigator>
     )
 }

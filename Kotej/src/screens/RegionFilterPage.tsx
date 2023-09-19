@@ -6,15 +6,16 @@ import { AppDispatch, StateType } from '../redux/stores/store';
 import { useEffect, useState } from 'react';
 import * as Font from 'expo-font';
 import { getHome } from '../redux/slices/HomeSlices';
-import { addFilterName, getData } from '../redux/slices/RegionSlices';
+import { deleteFilterName, getData } from '../redux/slices/RegionSlices';
+import SvgChevronLeft from '../icons/ChevronLeft';
 
-const HomeComp = ({ navigation }) => {
+const RegionFilterPage = ({ navigation }) => {
 
   const dispatch = useDispatch<AppDispatch>()
   const { data } = useSelector((state: StateType) => state.RegionSlice)
   const { home } = useSelector((state: StateType) => state.HomeSlice)
   const [fontsLoaded, setFontsLoaded] = useState(false);
-
+  const { filterName } = useSelector((state: StateType) => state.RegionSlice)
 
   useEffect(() => {
     Font.loadAsync({
@@ -27,6 +28,8 @@ const HomeComp = ({ navigation }) => {
       setFontsLoaded(true);
     });
   }, []);
+
+  const filterRegion = home.filter((c: any) => c.region == filterName)
 
   useEffect(() => {
     if (fontsLoaded) {
@@ -43,92 +46,29 @@ const HomeComp = ({ navigation }) => {
     );
   }
 
-
-
-  const renderItemHome = ({ item }: any) => {
-
-    return (
-      <TouchableOpacity onPress={() => navigation.navigate("DetailScreen", item)}>
-        <View>
-          <View style={{ marginTop: 10 }}>
-            <Image style={styles.homeImg} source={{ uri: item.photos }} />
-          </View>
-          <View style={styles.mainCard}>
-            <View style={{ flexDirection: "row", gap: 8, marginTop: 5 }}>
-              <Text style={[styles.detailhome, { color: "#BBBBBB" }]}>{item.category}</Text>
-              <Text style={styles.detailhome}>·  {item.area} m²</Text>
-              <Text style={styles.detailhome}>{item.roomCount} otaq</Text>
-              <Text style={styles.detailhome}>{item.maxGuest} nəfər</Text>
-            </View>
-            <View>
-              <Text style={styles.priceTxt}>{item.price} AZN/ {item.rent}</Text>
-            </View>
-            <View style={{ flexDirection: "row", gap: 3 }}>
-              <SvgLocation style={{ width: 12, height: 20 }} />
-              <Text style={styles.addressTxt}>{item.region}, {item.address}</Text>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-    )
-  }
-
-  const regionItem = ({ item }: any) => {
-    const handleRegion = () => {
-      dispatch(addFilterName(item.name));
-      navigation.navigate("RegionScreen")
-    }
-    return (
-      <TouchableOpacity onPress={handleRegion}>
-        <Image style={styles.regionImg} source={{ uri: item.image }} />
-        <Text style={styles.regionTxt}>{item.name}</Text>
-      </TouchableOpacity>
-    )
+  const handleDelete = () => {
+    dispatch(deleteFilterName())
+    navigation.navigate("Tabscmp")
   }
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
       <ScrollView>
         <View style={styles.container}>
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <Image style={{ width: 120, height: 120 }} source={require("../assets/image/logo/2.png")} />
-          </View>
-          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
-            <View style={styles.inputView}>
-              <Text style={styles.inputText}>Hara getmək istəyirsən?</Text>
-              <SvgSearchMagnifyingGlass style={{ fill: "none", stroke: "#C7C7C7", position: "absolute", top: 13, left: 20 }} />
-            </View>
-          </TouchableOpacity>
-          <View style={{ marginTop: 30 }}>
-            <FlatList
-              data={data}
-              horizontal
-              renderItem={regionItem}
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={() => <View style={{ width: 20 }} />}
-            />
-          </View>
-          <View>
-            <View style={{ marginTop: 25, marginHorizontal: 5 }}>
-              <Text style={styles.firstTitle}>Ən çox bəyənilən</Text>
-            </View>
-            <View>
-              <FlatList
-                horizontal
-                data={home}
-                renderItem={renderItemHome}
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{ width: 20 }} />}
-              />
+          <View style={{ width: "100%", backgroundColor: "#4D4D4D", padding: 12, borderRadius: 10, marginTop: 20 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "95%" }}>
+              <View style={{ flexDirection: "row", gap: 8 }}>
+                <TouchableOpacity onPress={handleDelete}>
+                  <SvgChevronLeft style={{ marginTop: 2 }} />
+                </TouchableOpacity>
+                <Text style={styles.headerText}>{filterName}</Text>
+              </View>
             </View>
           </View>
           <View>
-            <View>
-              <Text style={[styles.firstTitle, { marginTop: 15 }]}>Hamısı</Text>
-            </View>
             <View style={styles.boxContainer} >
               {
-                home.map((item: any, index: any) => (
+                filterRegion.map((item: any, index: any) => (
                   <View key={index} style={styles.box} >
                     <View style={{ marginTop: 10 }}>
                       <Image style={styles.homeImgAll} source={{ uri: item.photos }} />
@@ -159,9 +99,14 @@ const HomeComp = ({ navigation }) => {
   );
 }
 
-export default HomeComp;
+export default RegionFilterPage;
 
 const styles = StyleSheet.create({
+  headerText: {
+    color: "white",
+    fontSize: 18,
+    fontFamily: "Poppins-Medium"
+  },
   box: {
     width: "48%",
     marginTop: 10
@@ -245,7 +190,8 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   container: {
-    marginHorizontal: 12
+    marginHorizontal: 12,
+    marginTop: 40
   },
   inputText: {
     fontFamily: "Poppins-Medium",

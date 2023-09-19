@@ -19,6 +19,8 @@ import MapView, { Marker } from 'react-native-maps';
 import SvgChevronLeft from '../icons/ChevronLeft';
 import SvgHeart01 from '../icons/Heart01';
 import SvgShareIOsExport from '../icons/ShareIOsExport';
+import { addToFavorite } from '../redux/slices/HomeSlices';
+
 
 Font.loadAsync({
   'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -30,7 +32,10 @@ Font.loadAsync({
 
 
 
-const HomeDetail = ({ navigation }) => {
+const HomeDetail = ({ navigation, route }) => {
+
+  const item = route.params;
+
 
   let AnimatedHeaderValue = new Animated.Value(0)
   const headerMaxHeight = 150
@@ -41,9 +46,6 @@ const HomeDetail = ({ navigation }) => {
     outputRange: [headerMaxHeight, headerMinHeight],
     extrapolate: "clamp"
   })
-
-
-
 
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -77,6 +79,10 @@ const HomeDetail = ({ navigation }) => {
     Linking.openURL(phoneNumber);
   };
 
+  // const dispatch = useDispatch<AppDispatch>()
+  // const { favorites } = useSelector((state: StateType) => state.HomeSlice)
+
+  // console.log(favorites);
 
   return (
     <View style={{ backgroundColor: "#141414", flex: 1 }}>
@@ -89,18 +95,23 @@ const HomeDetail = ({ navigation }) => {
           <Animated.View style={{ position: "absolute", top: 50, left: 20, flexDirection: "row", justifyContent: "space-between", width: "90%", height: animateHeaderHeigth }}>
             <View>
               <TouchableOpacity style={{}} onPress={() => navigation.navigate("HomeScrn")}>
-                <View style={{ backgroundColor: "black", borderRadius: 50, padding: 3 }}><SvgChevronLeft /></View>
+                <View style={{ backgroundColor: "#2F2F2F", borderRadius: 50, width:38,height:38,flexDirection:"row",justifyContent:"center",alignItems:"center" }}><SvgChevronLeft /></View>
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row", gap: 10 }}>
-              <View>
-                <TouchableOpacity style={{}} onPress={() => navigation.navigate("HomeScrn")}>
-                  <View style={{ backgroundColor: "black", borderRadius: 50, padding: 3 }}><SvgHeart01 style={{ stroke: "white" }} /></View>
+              {/* <View>
+                <TouchableOpacity style={{}} onPress={() => dispatch(addToFavorite(item))}>
+                  <View style={{ backgroundColor: "#2F2F2F", borderRadius: 50, width:38,height:38,flexDirection:"row",justifyContent:"center",alignItems:"center"}}><SvgHeart01 style={{
+                     fill: favorites.find((c: any) => c.id == item.id) ? "#DF1717" : "none",
+                     stroke: favorites.find((c: any) => c.id == item.id) ? "#DF1717" : "white",
+                    width: 26,
+                    height: 26
+                  }} /></View>
                 </TouchableOpacity>
-              </View>
+              </View> */}
               <View>
                 <TouchableOpacity>
-                  <View style={{ backgroundColor: "black", borderRadius: 50, padding: 3 }}><SvgShareIOsExport /></View>
+                  <View style={{ backgroundColor: "#2F2F2F", borderRadius: 50, width:38,height:38,flexDirection:"row",justifyContent:"center",alignItems:"center"}}><SvgShareIOsExport /></View>
                 </TouchableOpacity>
               </View>
             </View>
@@ -108,7 +119,7 @@ const HomeDetail = ({ navigation }) => {
         </View>
         <View style={styles.container}>
           <View>
-            <Text style={styles.priceTxt}>128 AZN/gün</Text>
+            <Text style={styles.priceTxt}>{item.price} AZN/gün</Text>
           </View>
           <View>
             <View style={{ flexDirection: "row", marginTop: 5, gap: 8 }}>
@@ -132,7 +143,10 @@ const HomeDetail = ({ navigation }) => {
           </View>
           <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", marginTop: 5 }}>
             <View style={{ width: "50%", flexDirection: "row", gap: 9, marginTop: 5, alignItems: "center" }}>
-              <SvgDoors />
+              <SvgDoors style={{
+                width: 13,
+                height: 13
+              }} />
               <Text style={{ color: "white", fontSize: 17 }}>4 yataq otağı</Text>
             </View>
             <View style={{ width: "50%", flexDirection: "row", gap: 5, marginTop: 5, alignItems: "center" }}>
@@ -302,7 +316,10 @@ const styles = StyleSheet.create({
   },
 
   doorSvg: {
-    marginTop: 4
+    marginTop: 4,
+    width: 13,
+    height: 13
+
   },
   guestSvg: {
     marginTop: 3

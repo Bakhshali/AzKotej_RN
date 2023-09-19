@@ -8,8 +8,8 @@ const SvgDoors = props => (
       enableBackground: 'new 0 0 512 512',
     }}
     viewBox="0 0 512 512"
-    width="13"
-    height="13"
+    // width="13"
+    // height="13"
     stroke={"white"}
     fill="white"
     {...props}>

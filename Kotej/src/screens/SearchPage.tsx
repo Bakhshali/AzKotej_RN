@@ -7,18 +7,18 @@ import SvgLocation from '../icons/Location'
 import { AppDispatch, StateType } from '../redux/stores/store'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Font from 'expo-font';
-import { getHome } from '../redux/slices/HomeSlices'
 import { addFilterName, getData } from '../redux/slices/RegionSlices'
 
 const SearchPage = ({ navigation }) => {
 
     const [fontsLoaded, setFontsLoaded] = useState(false);
+    const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
     const dispatch = useDispatch<AppDispatch>()
     const { data, filterName } = useSelector((state: StateType) => state.RegionSlice)
 
-
-
+    console.log(filterName);
+    
     useEffect(() => {
         Font.loadAsync({
             'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -29,7 +29,8 @@ const SearchPage = ({ navigation }) => {
         }).then(() => {
             setFontsLoaded(true);
         });
-    }, []);
+        setSelectedItemIndex(null);
+    }, [navigation]);
 
     useEffect(() => {
         if (fontsLoaded) {
@@ -44,12 +45,17 @@ const SearchPage = ({ navigation }) => {
         );
     }
 
-    const regionItems = ({ item }: any) => {
+
+    const regionItems = ({ item, index }: any) => {
+        const isSelected = index === selectedItemIndex;
         return (
             <View style={{ marginTop: 10 }}>
-                <Pressable onPress={() => dispatch(addFilterName(item.name))}>
+                <Pressable onPress={() => {
+                    dispatch(addFilterName(item.name));
+                    setSelectedItemIndex(index);
+                }}>
                     <View style={{ marginTop: 12, marginBottom: 12 }}>
-                        <Text style={{ color: "white", fontSize: 16, fontFamily: "Poppins-Regular" }}>{item.name}</Text>
+                        <Text style={{ color: isSelected ? "#6C7521" : "white", fontSize: 16, fontFamily: "Poppins-Regular" }}>{item.name}</Text>
                     </View>
                 </Pressable>
                 <View style={styles.line}></View>
@@ -59,7 +65,7 @@ const SearchPage = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#141414" }}>
-            <View style={{ marginHorizontal: 15, flex: 10 }}>
+            <View style={{ marginHorizontal: 15, flex: 10, marginTop: 40 }}>
                 <View style={styles.headerMain}>
                     <TouchableOpacity onPress={() => navigation.navigate("Tabscmp")}>
                         <SvgCloseMd style={styles.closeIcon} />
@@ -73,12 +79,12 @@ const SearchPage = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={{ marginTop: 30, gap: 10 }}>
-                    <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
+                    {/* <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
                         <SvgLocation style={{ width: 18, height: 18 }} />
                         <Text style={{ color: "white", fontSize: 17, fontFamily: "Poppins-Regular" }}>Sizə yaxın olan yerlər</Text>
-                    </View>
-                    <View style={{ marginTop: 5, marginBottom: 8, gap: 20 }}>
-                        <View style={styles.line}></View>
+                    </View> */}
+                    <View style={{ marginTop: 0, marginBottom: 8, gap: 20 }}>
+                        {/* <View style={styles.line}></View> */}
                         <Text style={{ color: "#A4A4A4", fontSize: 16, fontFamily: "Poppins-Medium" }}>Ən çox gedilən</Text>
                     </View>
                 </View>
